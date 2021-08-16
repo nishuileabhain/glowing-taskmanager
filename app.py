@@ -28,10 +28,10 @@ def get_tasks():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        #check if user is already in db
+        # check if user is already in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
-        
+
         if existing_user:
             flash("username already exists")
             return redirect(url_for("register"))
@@ -42,11 +42,45 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        #put the new user into 'session' cookie
-        session["user"]  = request.form.get("username").lower()
+        # put the new user into 'session' cookie
+        session["user"] = request.form.get("username").lower()
         flash("registration successful")
+        return redirect(url_for("profile", username=session["user"]))
 
     return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if existing_user:
+            # hashed password matches user input
+            if check_password_hash(existing_user["password"], request.form.get("password")):
+                    session["user"] = request.form.get("username").lower()
+                    flash("Welcome, {}".format(request.form.get("username")))
+                    return redirect(url_for("profile", username=session["user"]))
+
+
+            else:
+                # invalid password match
+                flash("invalild username and/or password")
+                return redirect(url_for("login"))
+
+        else:
+            # username doesnt exist
+            flash("username doesnt exist")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
+
+@app.route("/profile/<username>", methods=["GET","POST"])
+def profile(username):
+    # get the session user's username from the database
+    username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    return render_template("profile.html", username=username)
 
 
 if __name__ == "__main__":
