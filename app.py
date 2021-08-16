@@ -57,9 +57,10 @@ def login():
 
         if existing_user:
             # hashed password matches user input
-            if check_password_hash(existing_user["password"], request.form.get("password")):
-                    session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
+            if check_password_hash(existing_user["password"], request.form.get(
+                                    "password")):
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(request.form.get("username")))
 
             else:
                 # invalid password match
@@ -76,7 +77,8 @@ def login():
 
 @app.route("/add_task")
 def add_task():
-    return render_template("add_task.html")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template("add_task.html", categories=categories)
 
 
 if __name__ == "__main__":
