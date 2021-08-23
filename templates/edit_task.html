@@ -10,7 +10,7 @@
             <div class="input-field col s12">
                 <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
                 <select id="category_name" name="category_name" class="validate" required>
-                    <option value="" disabled >Choose category</option>
+                    <option value="" disabled>Choose category</option>
                     {% for category in categories %}
                         {% if category.category_name == task.category_name %}
                             <option value="{{category.category_name}}" selected>{{category.category_name}}</option>
@@ -28,7 +28,7 @@
             <div class="input-field col s12">
                 <i class="fas fa-pencil-alt light-blue-text text-darken-4"></i>
                 <input id="task_name" name="task_name" type="text" class="validate" minlength="5" maxlength="50" 
-                 required>
+                 value="{{ task.task_name }}" required>
                 <label for="task_name">Task Name</label>
             </div>
         </div>
@@ -37,14 +37,14 @@
             <div class="input-field col s12" method="POST" action="">
                 <i class="fas fa-align-left light-blue-text text-darken-4"></i>
                 <textarea id="task_description" name="task_description" class="materialize-textarea validate" required></textarea>
-                <label for="task_description">Task Description</label>
+                <label for="task_description">{{- task.task_description -}}</label>
             </div>
         </div>
         <!--due date picker-->
         <div class="row">
             <div class="input-field col s12">
                 <i class="fas fa-calendar-alt light-blue-text text-darken-4"></i>
-                <input id="due_date" type="text" class="datepicker validate" name="due_date" required>
+                <input id="due_date" type="text" class="datepicker validate" name="due_date" value="{{ task.due_date }}" required>
                 <label for="due_date">Due Date</label>
             </div>
         <div class="row">
@@ -53,7 +53,11 @@
                 <!-- urgent toggle -->
                 <div class="switch">
                     <label for="is_urgent">
-                        <input type="checkbox" name="is_urgent" id="is_urgent">
+                        {% if task.is_urgent == "on" %}
+                            <input type="checkbox" name="is_urgent" id="is_urgent" checked>
+                        {% else %}
+                            <input type="checkbox" name="is_urgent" id="is_urgent">
+                        {% endif %}
                         <span class="lever"></span>
                         Is Urgent
                     </label>
@@ -63,6 +67,10 @@
         <!--submit button-->
         <div class="row">
             <div class="col s12 center-align">
+        <!--cancel button-->
+            <a href="{{ url_for('get_tasks') }}" class="btn-large red text-shadow">
+                Cancel <i class="fas fa-times-circle right"></i>
+            </a>   
                 <button type="submit" class="btn-large light-blue darken-1 text-shadow">
                     edit task <i class="fas fa-edit right"></i>
                 </button>
