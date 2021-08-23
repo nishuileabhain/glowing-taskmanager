@@ -4,6 +4,7 @@
 
 $(document).ready(function () {
     $(".sidenav").sidenav({edge: "right"});
+<<<<<<< HEAD
     $(".collapsible").collapsible();
     $(".tooltipped").tooltip();
     $("select").formSelect();
@@ -15,6 +16,11 @@ $(document).ready(function () {
             done: "Select"
         }
     });
+=======
+    $('.collapsible').collapsible();
+    $('.tooltipped').tooltip();
+});
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
 
     validateMaterializeSelect();
     function validateMaterializeSelect() {

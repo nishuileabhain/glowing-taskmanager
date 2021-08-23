@@ -14,6 +14,7 @@
     <title>Task Manager</title>
 </head>
 <body>
+<<<<<<< HEAD
 	<header>
         <!-- top navbar -->
 		<nav class="nav-extended text-shadow light-blue darken-1">
@@ -25,12 +26,26 @@
                     {% if session.user %}
                         <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                         <li><a href="{{ url_for('add_task') }}">New Task</a></li>
+=======
+    <header>
+        <!--top navbar-->
+        <nav class="nav-extended text-shadow light-blue darken-1">
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Task Manager</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Home</a></li>
+                    {% if session.user %}
+                        <li><a href="{{url_for('profile', username=session['user'])}}">Profile</a></li>
+                        <li><a href="#">New Task</a></li>
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
                         <li><a href="#">Manage Categories</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
                         <li><a href="{{ url_for('login') }}">Log In</a></li>
                         <li><a href="{{ url_for('register') }}">Register</a></li>
                     {% endif %}
+<<<<<<< HEAD
 				</ul>
 			</div>
 		</nav>
@@ -42,14 +57,31 @@
             {% if session.user %}
                 <li><a href="{{ url_for('profile', username=session['user']) }}">Profile</a></li>
                 <li><a href="{{ url_for('add_task') }}">New Task</a></li>
+=======
+                </ul>
+            </div>
+        </nav>
+        <!--mobile side nav bar-->
+        <ul class="sidenav" id="mobile-demo">
+            <li><h4 class="center-align light-blue-text text-darken 4">Task Manager</h4></li>
+            <li><a href="{{ url_for('get_tasks') }}">Home</a></li>
+            {% if session.user %}
+                <li><a href="{{url_for('profile', username=session['user'])}}">Profile</a></li>
+                <li><a href="#">New Task</a></li>
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
                 <li><a href="#">Manage Categories</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
                 <li><a href="{{ url_for('login') }}">Log In</a></li>
                 <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
+<<<<<<< HEAD
 		</ul>
 	</header>
+=======
+        </ul>
+    </header>
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
 
     <section>
         <!--flash messages-->

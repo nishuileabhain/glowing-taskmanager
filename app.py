@@ -58,11 +58,19 @@ def login():
 
         if existing_user:
             # hashed password matches user input
+<<<<<<< HEAD
             if check_password_hash(existing_user["password"], request.form.get(
                                     "password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
                 return redirect(url_for("profile", username=session["user"]))
+=======
+            if check_password_hash(existing_user["password"], request.form.get("password")):
+                    session["user"] = request.form.get("username").lower()
+                    flash("Welcome, {}".format(request.form.get("username")))
+                    return redirect(url_for("profile", username=session["user"]))
+
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
 
             else:
                 # invalid password match
@@ -76,6 +84,7 @@ def login():
 
     return render_template("login.html")
 
+<<<<<<< HEAD
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
@@ -87,10 +96,23 @@ def profile(username):
         return render_template("profile.html", username=username)
 
     return redirect(url_for("login"))
+=======
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # get the session user's username from the database
+    username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    return render_template("profile.html", username=username)
+
+    if session["user"]:
+        return render_template("profile.html", username=username)
+ 
+    return redirect (url_for("login"))
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
 
 
 @app.route("/logout")
 def logout():
+<<<<<<< HEAD
     # remove user from session cookie
     flash("You have been logged out")
     session.pop("user")
@@ -123,6 +145,13 @@ def edit_task(task_id):
 
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("edit_task.html", task=task, categories=categories)
+=======
+    # remove user from session cookies
+    flash("You have been logged out")
+    session.pop("user")
+    return redirect (url_for("login"))
+
+>>>>>>> a4d82799e689f339cec413e8465b3c8b87f63c09
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
